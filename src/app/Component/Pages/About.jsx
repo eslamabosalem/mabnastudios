@@ -78,7 +78,7 @@ const About = () => {
       <div className="max-w-7xl mx-auto">
         <h2
           ref={headingRef}
-          className="text-4xl md:text-5xl font-bold text-center mb-18 text-gray-900 dark:text-white"
+          className="text-4xl md:text-5xl font-bold text-center mb-18  dark:text-white"
         >
           Real Estate Designs
         </h2>
@@ -104,10 +104,10 @@ const About = () => {
                 />
               </div>
               <div className="w-full md:w-1/2 p-6 flex flex-col justify-center">
-                <h3 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white transition-colors duration-300 group-hover:text-[#C6530C]">
+                <h3 className="text-3xl font-bold mb-4  dark:text-white transition-colors duration-300 group-hover:text-[#C6530C]">
                   {post.title}
                 </h3>
-                <p className="text-[#290000] mb-6 dark:text-white ">
+                <p className=" mb-6 dark:text-white ">
                   {post.excerpt}
                 </p>
               </div>

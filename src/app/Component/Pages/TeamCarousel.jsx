@@ -77,7 +77,7 @@ export default function TeamCarousel() {
   return (
     <div className="relative w-full max-w-5xl mt-18 mb-18 mx-auto h-[500px] overflow-hidden">
       <h1
-        className="text-4xl md:text-5xl font-bold text-center mb-16 text-gray-900 dark:text-white"
+        className="text-4xl md:text-5xl font-bold text-center mb-16  dark:text-white"
       >
         OUR TEAM
       </h1>
@@ -128,7 +128,7 @@ export default function TeamCarousel() {
           {teamMembers[currentIndex].name}
         </h2>
         <p
-          className="text-xl text-gray-600 transition-opacity duration-300"
+          className="text-xl  dark:text-white transition-opacity duration-300"
           style={{ opacity: isAnimating ? 0 : 1 }}
         >
           {teamMembers[currentIndex].role}
@@ -137,7 +137,7 @@ export default function TeamCarousel() {
 
       {/* Navigation arrows */}
       <button
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10"
+        className="absolute left-4 top-1/2 transform -translate-y-1/2  p-2 rounded-full shadow-md z-10"
         onClick={() => updateCarousel(currentIndex - 1)}
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -145,7 +145,7 @@ export default function TeamCarousel() {
         </svg>
       </button>
       <button
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10"
+        className="absolute right-4 top-1/2 transform -translate-y-1/2   p-2 rounded-full shadow-md z-10"
         onClick={() => updateCarousel(currentIndex + 1)}
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -158,7 +158,7 @@ export default function TeamCarousel() {
         {teamMembers.map((_, i) => (
           <button
             key={i}
-            className={`w-3 h-3 rounded-full ${i === currentIndex ? 'bg-black' : 'bg-gray-300'}`}
+            className={`w-3 h-3 rounded-full ${i === currentIndex ? 'bg-black' : 'bg-gray-400'}`}
             onClick={() => updateCarousel(i)}
           />
         ))}
