@@ -52,7 +52,7 @@ export default function ContactUs() {
   return (
     <section
       ref={sectionRef}
-      className="py-20 px-4 bg-gray-50 dark:bg-gray-900"
+      className="py-20 px-4 bg-gray-50"
       id="contact"
     >
       <div className="container mx-auto max-w-6xl">
