@@ -91,7 +91,7 @@ export default function ContactUs() {
               <div className="mb-6">
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium  dark:text-white mb-2"
+                  className="block text-sm font-medium  dark:text-white  mb-2"
                 >
                   Email Address
                 </label>
