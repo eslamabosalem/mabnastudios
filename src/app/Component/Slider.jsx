@@ -1,8 +1,6 @@
 "use client";
-
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
-
 import team1 from "../../../images/1 (1).png";
 import team2 from "../../../images/1 (6).png";
 import team3 from "../../../images/1-1.png";
@@ -16,110 +14,174 @@ import team10 from "../../../images/11.png";
 import team11 from "../../../images/44.png";
 import team12 from "../../../images/2222.png";
 
-const data = [
+
+
+const sliderData = [
   {
-    title: "Section 1",
+    title: "Estate for Sale and Purchase",
+    description: "Find amazing properties to buy or sell easily.",
     images: [team1, team2, team3, team4],
-    overlayText: " Estate for Sale and Purchase",
+    interval: 3000,
   },
   {
-    title: "Section 2",
+    title: "Find Your Dream Home with Us",
+    description: "We help you locate the perfect home for your needs.",
     images: [team5, team6, team7, team8],
-    overlayText: "Find Your Dream Home with Us",
+    interval: 4000,
   },
   {
-    title: "Section 3",
+    title: "Exclusive Properties at Best ",
+    description: "Get access to premium properties at competitive prices.",
     images: [team9, team10, team11, team12],
-    overlayText: "Exclusive Properties at Best Prices",
+    interval: 5000,
   },
 ];
 
-function ImageWithArrows({ images, overlayText }) {
+function ImageWithArrows({ images, title, description, interval }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const touchStartX = useRef(null);
+  const intervalRef = useRef(null);
 
-  const prevImage = () => {
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  // الكشف عن الأجهزة المحمولة
+  useEffect(() => {
+    setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
+  }, []);
+
+  // إدارة الفاصل الزمني
+  const startInterval = useCallback(() => {
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setCurrentIndex(prev => (prev === images.length - 1 ? 0 : prev + 1));
+      setShowOverlay(false);
+    }, interval);
+  }, [images.length, interval]);
+
+  // التحكم في السلايدر
+  const prevImage = useCallback(() => {
+    startInterval();
+    setCurrentIndex(prev => (prev === 0 ? images.length - 1 : prev - 1));
+    setShowOverlay(false);
+  }, [images.length, startInterval]);
+
+  const nextImage = useCallback(() => {
+    startInterval();
+    setCurrentIndex(prev => (prev === images.length - 1 ? 0 : prev + 1));
+    setShowOverlay(false);
+  }, [images.length, startInterval]);
+
+  // إدارة اللمس
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
   };
 
-  const nextImage = () => {
-    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
- return (
-  <>
+  const handleTouchEnd = (e) => {
+    if (!touchStartX.current) return;
     
-    <div className="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden group cursor-pointer">
-         
-      {/* الصورة */}
-      <Image
-        src={images[currentIndex]}
-        alt={`Image ${currentIndex}`}
-        width={500}
-        height={250}
-        className="object-cover w-full h-[300px] transition-transform duration-300 group-hover:scale-110"
-      />
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX;
 
-      {/* Layer الشفافة */}
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) nextImage();
+      else prevImage();
+    }
+    
+    touchStartX.current = null;
+  };
+
+  useEffect(() => {
+    startInterval();
+    return () => clearInterval(intervalRef.current);
+  }, [startInterval]);
+
+  return (
+    <div className="relative group">
+      {/* عنوان القسم */}
+      <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white text-center">
+        {title}
+      </h2>
+
       <div
-        className="
-          absolute inset-0
-         hover:bg-opacity-10 hover:bg-[#3333]
-          transition-all duration-500 ease-in-out
-          group-hover:bg-opacity-20
-          z-10
-          flex items-center justify-center
-          px-4
-        "
+        className="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden cursor-pointer"
+        style={{ height: 300 }}
+        onMouseEnter={() => !isMobile && setShowOverlay(true)}
+        onMouseLeave={() => !isMobile && setShowOverlay(false)}
+        onClick={() => isMobile && setShowOverlay(prev => !prev)}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
-        {/* النص */}
-        <span className="
-          text-white font-semibold text-center text-[16px]
-          opacity-0 transform translate-y-4
-          transition-all duration-500 ease-in-out
-          group-hover:opacity-100 group-hover:translate-y-0
-        ">
-          {overlayText}
-        </span>
+        {images.map((img, index) => (
+          <Image
+            key={index}
+            src={img}
+            alt={`Image ${index}`}
+            fill
+            className={`object-cover transition-opacity duration-500 ${
+              index === currentIndex ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
+
+        {/* Overlay مع تأثيرات متقدمة */}
+        <div
+          className={`absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4 transition-all duration-300 ${
+            showOverlay ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <div className="text-white space-y-2">
+            <h3 className="text-xl font-bold">{title}</h3>
+            <p className="text-sm line-clamp-3">{description}</p>
+          </div>
+        </div>
+
+        {/* الأزرار مع تحسينات لللمس */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            prevImage();
+          }}
+          className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white/30 p-2 rounded-full backdrop-blur-sm hover:bg-white/50 transition-all"
+        >
+          <span className="text-2xl">‹</span>
+        </button>
+
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            nextImage();
+          }}
+          className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white/30 p-2 rounded-full backdrop-blur-sm hover:bg-white/50 transition-all"
+        >
+          <span className="text-2xl">›</span>
+        </button>
       </div>
-
-      {/* الأسهم */}
-      <button
-        onClick={prevImage}
-        aria-label="Previous Image"
-        className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-[#333] bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80 z-30"
-      >
-        &#8592;
-      </button>
-
-      <button
-        onClick={nextImage}
-        aria-label="Next Image"
-        className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-[#333] bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80 z-30"
-      >
-        &#8594;
-      </button>
     </div>
-        </>
   );
 }
 
 export default function Slider() {
   return (
-    <>
-     <h1
-        className="text-4xl md:text-5xl font-bold text-center mb-18 md:mt-18 text-gray-900 dark:text-white"
-      >
-        OUR Work
+    <> <div className=" my-20">
+    <section className="py-12 px-4 md:px-8  dark:bg-gray-900">
+      <h1 className="text-4xl font-bold text-center mb-8 text-gray-900 dark:text-white">
+        OUR SERVIES
       </h1>
-    <div className="flex flex-col md:flex-row justify-center gap-6 max-w-7xl mx-auto p-6 mb-22">
-     
-      {data.map((section, idx) => (
-        <div key={idx} className="flex-1">
-          <h2 className="mb-4 text-[9px] font-bold text-center z-50 text-white">{section.title}</h2>
-          <ImageWithArrows images={section.images} overlayText={section.overlayText} />
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8  mx-auto">
+        {sliderData.map((section, idx) => (
+          <div key={idx} className=" dark:bg-gray-800 rounded-xl  p-4 dark:text-white ">
+            <ImageWithArrows
+              images={section.images}
+              title={section.title}
+              description={section.description}
+              interval={section.interval}
+            />
+          </div>
+        ))}
+      </div>
+    </section>
         </div>
-      ))}
-    </div>
-  </>
+    </>
   );
-
 }

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useRef, useEffect } from 'react';
@@ -50,18 +49,26 @@ const About = () => {
     };
   }, []);
 
-const blogPosts = [
-  {
-    title: "Innovative Residential Designs for Modern Living",
-    excerpt: "Discover how our cutting-edge architectural solutions create comfortable and sustainable living spaces tailored for today’s homeowners.",
-    image: logo
-  },
-  {
-    title: "Revolutionizing Shared Amenities in Real Estate",
-    excerpt: "Our latest developments focus on creating vibrant community spaces that enhance lifestyle and foster social connections among residents.",
-    image: logo1
-  }
-];
+  const handleTouchStart = (e) => {
+    e.currentTarget.classList.add('scale-105');
+  };
+
+  const handleTouchEnd = (e) => {
+    e.currentTarget.classList.remove('scale-105');
+  };
+
+  const blogPosts = [
+    {
+      title: "Innovative Residential Designs for Modern Living",
+      excerpt: "Discover how our cutting-edge architectural solutions create comfortable and sustainable living spaces tailored for today’s homeowners.",
+      image: logo
+    },
+    {
+      title: "Revolutionizing Shared Amenities in Real Estate",
+      excerpt: "Our latest developments focus on creating vibrant community spaces that enhance lifestyle and foster social connections among residents.",
+      image: logo1
+    }
+  ];
 
   return (
     <section
@@ -91,6 +98,8 @@ const blogPosts = [
                   alt="Blog Image"
                   width={700}
                   height={300}
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
                   className="w-[700px] h-[300px] object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
