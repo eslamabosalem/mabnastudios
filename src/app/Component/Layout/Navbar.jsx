@@ -1,20 +1,39 @@
-"use client";
-import { useState, useEffect, useRef } from "react";
-import logo from "../../../../images/Logo.png";
-import Image from "next/image";
-import { Switch, FormControlLabel } from "@mui/material";
-import Link from "next/link";
-import { useTranslation } from "react-i18next";
+'use client';
+import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Switch, FormControlLabel } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import logo from '../../../../images/Logo.png';
 
-export default function CustomNavbar({ toggleLanguage }) {
+export default function Navbar({ toggleLanguage }) {
   const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
   const [isMobile, setIsMobile] = useState(false);
-  const isArabic = i18n.language === "ar";
   const [darkMode, setDarkMode] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // 1. إدارة حجم الشاشة
+  // 1. Handle dark mode
+  useEffect(() => {
+    const savedMode = localStorage.getItem('darkMode');
+    if (savedMode) {
+      setDarkMode(savedMode === 'true');
+      document.documentElement.classList.toggle('dark', savedMode === 'true');
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setDarkMode(true);
+      document.documentElement.classList.add('dark');
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    const newMode = !darkMode;
+    setDarkMode(newMode);
+    localStorage.setItem('darkMode', newMode);
+    document.documentElement.classList.toggle('dark', newMode);
+  };
+
+  // 2. Handle responsiveness
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -22,50 +41,39 @@ export default function CustomNavbar({ toggleLanguage }) {
     };
 
     handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // 2. إدارة النقر خارج القائمة
+  // 3. Handle click outside dropdown
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownOpen(false);
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // 3. إدارة الوضع الداكن
-  useEffect(() => {
-    const savedMode = localStorage.getItem("darkMode");
-    if (savedMode) {
-      setDarkMode(savedMode === "true");
-      document.documentElement.classList.toggle("dark", savedMode === "true");
-    }
-  }, []);
-
-  const toggleDarkMode = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
-    localStorage.setItem("darkMode", newMode);
-    document.documentElement.classList.toggle("dark", newMode);
-  };
-
-  // 4. تحسين القائمة المنسدلة
+  // 4. Toggle dropdown for mobile
   const toggleDropdown = () => {
-    if (isMobile) setDropdownOpen((prev) => !prev);
+    if (isMobile) {
+      setDropdownOpen(!dropdownOpen);
+    }
   };
 
   return (
     <nav
-      className=" bg-white  dark:bg-[#242424] shadow-md fixed w-full top-0 z-50 px-6 py-2"
       ref={dropdownRef}
+      className={`fixed w-full top-0 z-50 px-6 py-2 shadow-md transition-colors duration-300 ${
+        darkMode ? 'bg-[#242424] text-white' : 'bg-white text-gray-800'
+      }`}
+      dir={isArabic ? 'rtl' : 'ltr'}
     >
       <div className="flex items-center justify-between md:justify-start gap-4">
-        {/* اللوجو على الشمال */}
+        {/* Logo */}
         <div className="flex-shrink-0">
           <Link href="/" className="z-50">
             <Image
@@ -73,21 +81,39 @@ export default function CustomNavbar({ toggleLanguage }) {
               width={40}
               height={60}
               alt="Logo"
-              className="dark:invert"
+              className={`${darkMode ? 'invert' : ''}`}
+              priority
             />
           </Link>
         </div>
 
-        {/* المحتوى في الوسط للشاشات الكبيرة */}
+        {/* Desktop Navigation Links */}
         <div className="hidden md:flex flex-1 justify-center items-center gap-6">
-          <NavLink href="#" text="Services" isMobile={false} />
-          <NavLink href="#" text="Blog" isMobile={false} />
-          <NavLink href="#" text="Our Work" isMobile={false} />
+          <NavLink href="/services" text={t('services')} darkMode={darkMode} />
+          <NavLink href="/blog" text={t('blog')} darkMode={darkMode} />
+          <NavLink href="/work" text={t('our_work')} darkMode={darkMode} />
         </div>
 
-        {/* زر القائمة للجوال */}
+        {/* Language Toggle */}
+      
+        {/* Dark Mode Toggle (Desktop) */}
+        <div className="hidden md:flex items-center">
+          <FormControlLabel
+            control={
+              <Switch
+                checked={darkMode}
+                onChange={toggleDarkMode}
+                color="primary"
+              />
+            }
+            label={darkMode ? '🌙' : '☀️'}
+            className="mx-2"
+          />
+        </div>
+
+        {/* Mobile Menu Button */}
         <button
-          className="md:hidden p-2 text-gray-600 dark:text-gray-300"
+          className="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
           onClick={toggleDropdown}
           aria-label="Toggle menu"
         >
@@ -100,55 +126,56 @@ export default function CustomNavbar({ toggleLanguage }) {
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth="2"
+              strokeWidth={2}
               d="M4 6h16M4 12h16M4 18h16"
             />
           </svg>
         </button>
-
-        {/* مفتاح الوضع الداكن على اليمين في الشاشات الكبيرة */}
-        <div className="hidden md:flex flex-shrink-0">
-          <FormControlLabel
-            control={
-              <Switch
-                checked={darkMode}
-                onChange={toggleDarkMode}
-                color="primary"
-                sx={{ m: 1 }}
-              />
-            }
-            label={darkMode ? "🌙" : "☀️"}
-            className="dark:text-white"
-          />
-        </div>
       </div>
 
-      {/* القائمة المنسدلة للجوال مع روابط ومفتاح الوضع الداكن */}
+      {/* Mobile Dropdown Menu */}
       {isMobile && (
         <div
-          className={`absolute top-full left-0 right-0 bg-white dark:bg-[#242424] shadow-lg transition-all duration-300 ${
+          className={`md:hidden transition-all duration-300 overflow-hidden ${
             dropdownOpen
-              ? "max-h-96 opacity-100"
-              : "max-h-0 opacity-0 overflow-hidden"
+              ? 'max-h-96 opacity-100 py-2'
+              : 'max-h-0 opacity-0 py-0'
+          } ${
+            darkMode ? 'bg-[#2d2d2d]' : 'bg-gray-50'
           }`}
         >
-          <NavLink href="#" text="Services" isMobile={true} />
-          <NavLink href="#" text="Blog" isMobile={true} />
-          <NavLink href="#" text="Our Work" isMobile={true} />
-
-          {/* مفتاح الوضع الداكن داخل القائمة */}
-          <div className="px-4 py-3 border-t border-gray-300 dark:border-gray-700 flex items-center justify-start">
+          <NavLink 
+            href="/services" 
+            text={t('services')} 
+            mobile 
+            darkMode={darkMode}
+          />
+          <NavLink 
+            href="/blog" 
+            text={t('blog')} 
+            mobile 
+            darkMode={darkMode}
+          />
+          <NavLink 
+            href="/work" 
+            text={t('our_work')} 
+            mobile 
+            darkMode={darkMode}
+          />
+          
+          <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 dark:border-gray-700">
+         
+            
             <FormControlLabel
               control={
                 <Switch
                   checked={darkMode}
                   onChange={toggleDarkMode}
                   color="primary"
-                  sx={{ m: 1 }}
                 />
               }
-              label={darkMode ? "🌙" : "☀️"}
-              className="dark:text-white"
+              label={darkMode ? t('dark_mode') : t('light_mode')}
+              className="ml-2"
             />
           </div>
         </div>
@@ -157,16 +184,26 @@ export default function CustomNavbar({ toggleLanguage }) {
   );
 }
 
-// مكون مساعد لعناصر التنقل
-const NavLink = ({ href, text, isMobile }) => (
-  <Link
-    href={href}
-    className={`px-4 py-3 block md:inline-block ${
-      isMobile
-        ? "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-        : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-    } transition-colors`}
-  >
-    {text}
-  </Link>
-);
+// NavLink Component
+function NavLink({ href, text, mobile = false, darkMode }) {
+  return (
+    <Link
+      href={href}
+      className={`block px-4 py-3 transition-colors duration-200 ${
+        mobile
+          ? `${
+              darkMode
+                ? 'hover:bg-gray-700 text-white'
+                : 'hover:bg-gray-100 text-gray-800'
+            }`
+          : `${
+              darkMode
+                ? 'hover:text-gray-300 text-gray-200'
+                : 'hover:text-gray-600 text-gray-700'
+            }`
+      }`}
+    >
+      {text}
+    </Link>
+  );
+}
