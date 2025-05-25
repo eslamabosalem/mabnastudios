@@ -1,16 +1,10 @@
 @import "tailwindcss";
 /* app/globals.css */
 
+/* الوضع الداكن فقط */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 body {
@@ -20,13 +14,14 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* لو هتستخدم class="dark" */
 .dark {
   color-scheme: dark;
 }
 
 .dark body {
-  background-color: #242424;
-  color: white;
+  background-color: #0a0a0a;
+  color: #ededed;
 }
 
 /* Navbar Specific Styles */
@@ -40,16 +35,14 @@ body {
 }
 
 .navbar-link:hover {
-  @apply text-gray-600 dark:text-gray-300;
+  @apply text-gray-300;
 }
 
 .mobile-menu {
-  @apply bg-white dark:bg-[#242424] shadow-lg;
+  @apply bg-[#242424] shadow-lg;
 }
 
-
-/* Add these classes to your global CSS */
-
+/* Team Carousel Styles */
 .TeamCarouselcenter {
   left: 50%;
   transform: translateX(-50%) scale(1);
@@ -82,22 +75,12 @@ body {
   opacity: 0.7;
 }
 
-.dark {
-  color-scheme: dark;
-}
-body{
- background-color: #FFFFFF;
-  }
-
-
-.dark body {
-  background-color: #242424;
-  color: white;
-}
 .TeamCarouselhidden {
   opacity: 0;
   pointer-events: none;
-} 
+}
+
+/* Cursor Dot */
 .dot {
   position: fixed;
   width: 8px;
@@ -107,6 +90,7 @@ body{
   z-index: 9999;
 }
 
+/* Image Fade Animation */
 .image-fade {
   transition: opacity 1s ease-in-out;
   opacity: 1;
