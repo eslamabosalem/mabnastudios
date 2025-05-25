@@ -9,7 +9,7 @@ import ContactUs from "./Component/Pages/CountactUs";
 export default function Home() {
   return (
     <>
-  
+  <div className=" mx-1">
 <HomeHero/>
 <About/>
 
@@ -18,7 +18,7 @@ export default function Home() {
 <TeamCarousel/>
 <ContactUs/>
 
-
+</div>
 
 </>
 

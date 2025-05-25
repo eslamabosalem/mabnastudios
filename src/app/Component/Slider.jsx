@@ -98,7 +98,7 @@ function ImageWithArrows({ images, title, description, interval }) {
   return (
     <div className="relative group">
       {/* عنوان القسم */}
-      <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white text-center">
+      <h2 className="text-2xl font-bold mb-4 my-4  dark:text-white text-center">
         {title}
       </h2>
 
@@ -164,13 +164,13 @@ export default function Slider() {
   return (
     <> <div className=" my-20">
     <section className="py-12 px-4 md:px-8 ">
-      <h1 className="text-4xl font-bold text-center mb-8 text-gray-900 dark:text-white">
+      <h1 className="text-4xl font-bold text-center mb-8  dark:text-white">
         OUR SERVIES
       </h1>
       {/*  */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8  mx-auto">
         {sliderData.map((section, idx) => (
-          <div key={idx} className=" dark:bg-gray-800 rounded-xl  p-4 dark:text-white ">
+          <div key={idx} className="  rounded-xl  p-4 dark:text-white ">
             <ImageWithArrows
               images={section.images}
               title={section.title}

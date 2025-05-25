@@ -10,14 +10,12 @@ import whiteArrow from "../../../../images/whiteArrow.svg";
 import { useTranslation } from "react-i18next";
 import CustomNavbar from "../Layout/Navbar";
 
-// import ScrollAnimation from "../Action/Action";
-
 export default function HomeHero() {
   const { t, i18n } = useTranslation();
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0); // شغل الفيديو أولاً بدون تأخير
   const [hoveredButton, setHoveredButton] = useState(null);
   const [isRTL, setIsRTL] = useState(i18n.language === "ar");
-  const [isMobilePlaying, setIsMobilePlaying] = useState(false);
+  const [isMobilePlaying, setIsMobilePlaying] = useState(true); // خلي الموبايل يبدأ التشغيل تلقائياً
   const videoRef = useRef(null);
 
   const sections = [
@@ -43,14 +41,6 @@ export default function HomeHero() {
     setIsRTL(i18n.language === "ar");
   }, [i18n.language]);
 
-  // في الديسكتوب: نبدأ الفيديو الأول بعد 8 ثواني
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setActiveIndex(0);
-    }, 8000);
-    return () => clearTimeout(timer);
-  }, []);
-
   // GSAP animation
   useEffect(() => {
     if (activeIndex !== null) {
@@ -62,7 +52,7 @@ export default function HomeHero() {
     }
   }, [activeIndex]);
 
-  // تغيير مصدر الفيديو عند تغير activeIndex
+  // تشغيل الفيديو فوراً وبدون تأخير
   useEffect(() => {
     if (videoRef.current && activeIndex !== null) {
       const video = videoRef.current;
@@ -74,11 +64,17 @@ export default function HomeHero() {
         video.src = newSrc;
         video.load();
         video.oncanplay = () => {
-          if (!isMobilePlaying) video.play();
+          video.play().catch(() => {
+            // بعض المتصفحات تحجب التشغيل التلقائي بدون تفاعل، خاصة iOS
+          });
+          setIsMobilePlaying(true);
         };
+      } else {
+        video.play().catch(() => {});
+        setIsMobilePlaying(true);
       }
     }
-  }, [activeIndex, isMobilePlaying]);
+  }, [activeIndex]);
 
   // handlers
   const handleMouseEnter = (index) => {
@@ -131,13 +127,12 @@ export default function HomeHero() {
   return (
     <>
       {/* Desktop Hero */}
-     <CustomNavbar/>
+      <CustomNavbar />
       <div className="relative w-full h-[700px] hidden lg:flex items-center justify-center overflow-hidden">
-
         {/* الفيديو */}
         <video
           ref={videoRef}
-          autoPlay={activeIndex !== null && !isMobilePlaying}
+          autoPlay
           muted
           loop
           playsInline
@@ -153,7 +148,7 @@ export default function HomeHero() {
         {/* طبقة التعتيم السوداء الشفافة */}
         <div className="absolute inset-0 bg-black opacity-10 pointer-events-none"></div>
 
-        {/* المحتوى النصي */}
+        {/* المحتوى النصي مع الأزرار تحت النص وعلى الشمال */}
         <div
           className={`absolute inset-0 flex ps-20 pe-36 ${
             isRTL ? "flex-row-reverse" : ""
@@ -167,33 +162,34 @@ export default function HomeHero() {
               onMouseLeave={handleMouseLeave}
             >
               {activeIndex === index && (
-                <div
-                  className="absolute inset-0 flex flex-col items-center text-start top-36 text-white lg:w-[400px] transition-opacity duration-500 opacity-100 font-cairo text-animate"
-                >
+                <div className="absolute inset-0 flex flex-col items-start top-36 text-white lg:w-[400px] transition-opacity duration-500 opacity-100 font-cairo text-animate">
                   <h1 className="leading-[70px] text-[38px] font-[900]">
                     {section.title}
                   </h1>
-                  <p className="text-[16px] font-[500] mt-[20px] mb-[70px]">
+                  <p className="text-[16px] font-[500] mt-[20px] mb-6">
                     {section.description}
                   </p>
 
-                  <Link href={`/${section.to}`}>
-                    <button
-                      className="font-cairo flex justify-start px-4 py-4 rounded-[10px] bg-[#1E3A8A] text-white hover:bg-[#F59E0B] hover:text-[#1E3A8A] transition-all duration-300 w-full"
-                      onMouseEnter={() => setHoveredButton(index)}
-                      onMouseLeave={() => setHoveredButton(null)}
-                    >
-                      {section.btn}
-                      <span className="ms-3">
-                        <Image
-                          src={hoveredButton === index ? whiteArrow : arrow}
-                          alt="arrow"
-                          width={20}
-                          height={20}
-                        />
-                      </span>
-                    </button>
-                  </Link>
+                  {/* زرار في صف جديد تحت النص وعلى الشمال */}
+                  <div className="w-full flex justify-start">
+                    <Link href={`/${section.to}`}>
+                      <button
+                        className="font-cairo flex items-center px-4 py-4 rounded-[10px] bg-[#1E3A8A] text-white hover:bg-[#F59E0B] hover:text-[#1E3A8A] transition-all duration-300 max-w-[220px]"
+                        onMouseEnter={() => setHoveredButton(index)}
+                        onMouseLeave={() => setHoveredButton(null)}
+                      >
+                        {section.btn}
+                        <span className="ms-3">
+                          <Image
+                            src={hoveredButton === index ? whiteArrow : arrow}
+                            alt="arrow"
+                            width={20}
+                            height={20}
+                          />
+                        </span>
+                      </button>
+                    </Link>
+                  </div>
                 </div>
               )}
             </div>
@@ -221,6 +217,12 @@ export default function HomeHero() {
           className="w-full h-full object-cover"
           key={sections[activeIndex ?? 0].video}
           onClick={toggleMobilePlay}
+          autoPlay
+          controls={false} // إخفاء تحكم الفيديو الافتراضي على الموبايل
+          preload="auto"
+          webkit-playsinline="true"
+          playsInline
+          // هذه الخصائص تساعد على تشغيل الفيديو تلقائيًا على iOS
         >
           <source src={sections[activeIndex ?? 0].video} type="video/mp4" />
           المتصفح لا يدعم تشغيل الفيديو.
@@ -252,7 +254,7 @@ export default function HomeHero() {
               }`}
               onClick={() => {
                 setActiveIndex(idx);
-                setIsMobilePlaying(false);
+                setIsMobilePlaying(true);
               }}
               aria-label={`Go to slide ${idx + 1}`}
             ></button>
@@ -270,9 +272,6 @@ export default function HomeHero() {
         <span>|</span>
         <span className="flex-1 text-center">Ask the Experts</span>
       </div>
-    
-      
-      
     </>
   );
 }
