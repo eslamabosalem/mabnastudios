@@ -61,7 +61,7 @@ export default function CustomNavbar({ toggleLanguage }) {
 
   return (
     <nav
-      className="bg-white dark:bg-[#242424] shadow-md fixed w-full top-0 z-50 px-6 py-2"
+      className=" bg-white dark:bg-[#242424] shadow-md fixed w-full top-0 z-50 px-6 py-2"
       ref={dropdownRef}
     >
       <div className="flex items-center justify-between md:justify-start gap-4">
