@@ -103,8 +103,8 @@ function ImageWithArrows({ images, title, description, interval }) {
       </h2>
 
       <div
-        className="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden cursor-pointer"
-        style={{ height: 300 }}
+        className="relative w-full  my-10 mx-auto rounded-lg overflow-hidden cursor-pointer"
+        style={{ height: 400 }}
         onMouseEnter={() => !isMobile && setShowOverlay(true)}
         onMouseLeave={() => !isMobile && setShowOverlay(false)}
         onClick={() => isMobile && setShowOverlay(prev => !prev)}
@@ -141,7 +141,7 @@ function ImageWithArrows({ images, title, description, interval }) {
             e.stopPropagation();
             prevImage();
           }}
-          className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white/30 p-2 rounded-full backdrop-blur-sm hover:bg-white/50 transition-all"
+          className="absolute top-1/2 left-2 transform -translate-y-1/2 p-2 rounded-full backdrop-blur-sm hover:bg-white/50 transition-all"
         >
           <span className="text-2xl">‹</span>
         </button>
@@ -163,7 +163,7 @@ function ImageWithArrows({ images, title, description, interval }) {
 export default function Slider() {
   return (
     <> <div className=" my-20">
-    <section className="py-12 px-4 md:px-8  dark:bg-gray-900">
+    <section className="py-12 px-4 md:px-8 ">
       <h1 className="text-4xl font-bold text-center mb-8 text-gray-900 dark:text-white">
         OUR SERVIES
       </h1>
