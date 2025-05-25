@@ -38,6 +38,10 @@
 
 
 
+.dark body {
+  background-color: #242424;
+  color: white;
+}
 .TeamCarouselhidden {
   opacity: 0;
   pointer-events: none;
