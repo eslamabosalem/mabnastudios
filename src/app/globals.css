@@ -37,6 +37,21 @@
 }
 
 
+@layer base {
+  html {
+    @apply dark:bg-gray-900 dark:text-white;
+  }
+}
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.font-cairo {
+  font-family: 'Cairo', sans-serif;
+}
+body{
+ background-color: #FFFFFF;
+  }
 
 .dark body {
   background-color: #242424;
