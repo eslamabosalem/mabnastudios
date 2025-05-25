@@ -78,7 +78,7 @@ const About = () => {
       <div className="max-w-7xl mx-auto">
         <h2
           ref={headingRef}
-          className="text-4xl md:text-5xl font-bold text-center mb-18  dark:text-white"
+          className="text-4xl md:text-5xl font-bold text-center mb-18    text-black dark:text-white"
         >
           Real Estate Designs
         </h2>

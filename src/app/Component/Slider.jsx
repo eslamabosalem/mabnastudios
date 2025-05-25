@@ -14,8 +14,6 @@ import team10 from "../../../images/11.png";
 import team11 from "../../../images/44.png";
 import team12 from "../../../images/2222.png";
 
-
-
 const sliderData = [
   {
     title: "Estate for Sale and Purchase",
@@ -103,7 +101,7 @@ function ImageWithArrows({ images, title, description, interval }) {
       </h2>
 
       <div
-        className="relative w-full  my-10 mx-auto rounded-lg overflow-hidden cursor-pointer"
+        className="relative w-full  md:my-10 mx-auto rounded-lg overflow-hidden cursor-pointer"
         style={{ height: 400 }}
         onMouseEnter={() => !isMobile && setShowOverlay(true)}
         onMouseLeave={() => !isMobile && setShowOverlay(false)}
@@ -162,7 +160,7 @@ function ImageWithArrows({ images, title, description, interval }) {
 
 export default function Slider() {
   return (
-    <> <div className=" my-20">
+    <> <div className=" md:my-20">
     <section className="py-12 px-4 md:px-8 ">
       <h1 className="text-4xl font-bold text-center mb-8  dark:text-white">
         OUR SERVIES
