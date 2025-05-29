@@ -100,14 +100,14 @@ export default function ScrollVideo() {
   };
 
   return (
-    <div className="relative h-[60vh] overflow-hidden group max-w-full rounded-2xl">
+    <div className="relative h:[40] lg:h-[50vh] overflow-hidden group max-w-full rounded-2xl">
       <video
         ref={videoRef}
         src="/video/Architectural 1.mp4"
         autoPlay
         muted
         loop
-        className="w-full h-[500px] object-cover rounded-2xl"
+        className="w-full h-[500px]  mx-3 object-cover rounded-2xl"
       />
 
       {/* زر التشغيل والإيقاف في الأسفل يمين */}
