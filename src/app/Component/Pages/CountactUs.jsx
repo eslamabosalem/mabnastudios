@@ -58,10 +58,10 @@ export default function ContactUs() {
       <div className="container mx-auto max-w-6xl">
         {/* Heading */}
         <div className="text-center mb-16" ref={headingRef}>
-          <h2 className="text-4xl font-bold  dark:text-white mb-4">
+          <h2 className="text-4xl font-bold   mb-4">
             Contact Us
           </h2>
-          <p className="text-lg dark:text-white max-w-2xl mx-auto">
+          <p className="text-lg  max-w-2xl mx-auto">
             Have questions or want to discuss a project? Get in touch with our team.
           </p>
         </div>
@@ -70,20 +70,20 @@ export default function ContactUs() {
           {/* Contact Form */}
           <div
             ref={formRef}
-            className="  dark:text-white  p-8 rounded-xl"
+            className="    p-8 rounded-xl"
           >
             <form>
               <div className="mb-6">
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium  dark:text-white mb-2"
+                  className="block text-sm font-medium   mb-2"
                 >
                   Your Name
                 </label>
                 <input
                   type="text"
                   id="name"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:text-[#b3942d] focus:border-[#b3942d] dark:bg-gray-700 dark:text-white"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:text-[#b3942d] focus:border-[#b3942d] dark:bg-gray-700 "
                   placeholder="John Doe"
                 />
               </div>
@@ -91,7 +91,7 @@ export default function ContactUs() {
               <div className="mb-6">
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium  dark:text-white  mb-2"
+                  className="block text-sm font-medium    mb-2"
                 >
                   Email Address
                 </label>
@@ -105,14 +105,14 @@ export default function ContactUs() {
               <div className="mb-6">
                 <label
                   htmlFor="message"
-                  className="block text-sm font-medium dark:text-white mb-2"
+                  className="block text-sm font-medium  mb-2"
                 >
                   Your Message
                 </label>
                 <textarea
                   id="message"
                   rows="5"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:text-[#b3942d] focus:border:text-[#b3942d] dark:bg-gray-700 dark:text-white"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:text-[#b3942d] focus:border:text-[#b3942d] dark:bg-gray-700 "
                   placeholder="Tell us about your project..."
                 ></textarea>
               </div>
@@ -132,7 +132,7 @@ export default function ContactUs() {
             ref={infoRef}
             className="  p-8 rounded-xl "
           >
-            <h3 className="text-2xl font-semibold dark:text-white mb-6">
+            <h3 className="text-2xl font-semibold  mb-6">
               Get in Touch
             </h3>
 
@@ -165,12 +165,12 @@ export default function ContactUs() {
                 </div>
                 <div className="ml-4">
                   <h4
-                    className="text-lg font-medium  dark:text-white"
+                    className="text-lg font-medium  "
                     style={{ color: goldColor }}
                   >
                     Address
                   </h4>
-                  <p className="mt-1 dark:text-white">
+                  <p className="mt-1 ">
                     123 Business Ave, Suite 456
                     <br />
                     New York, NY 10001
@@ -200,12 +200,12 @@ export default function ContactUs() {
                 </div>
                 <div className="ml-4">
                   <h4
-                    className="text-lg font-medium  dark:text-white"
+                    className="text-lg font-medium  "
                     style={{ color: goldColor }}
                   >
                     Phone
                   </h4>
-                  <p className="mt-1  dark:text-white">
+                  <p className="mt-1  ">
                     +20 12-808-86588
                     <br />
                     +20 12-030-32307
@@ -235,12 +235,12 @@ export default function ContactUs() {
                 </div>
                 <div className="ml-4">
                   <h4
-                    className="text-lg font-medium dark:text-white"
+                    className="text-lg font-medium "
                     style={{ color: goldColor }}
                   >
                     Email
                   </h4>
-                  <p className="mt-1 dark:text-white">
+                  <p className="mt-1 ">
                     yousefabosalem15@gmail.com
                   </p>
                 </div>

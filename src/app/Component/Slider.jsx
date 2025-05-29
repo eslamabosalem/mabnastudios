@@ -96,7 +96,7 @@ function ImageWithArrows({ images, title, description, interval }) {
   return (
     <div className="relative group">
       {/* عنوان القسم */}
-      <h2 className="text-2xl font-bold mb-4 my-4   text-center">
+      <h2 className="text-2xl font-bold mb-4 my-4 text-center">
         {title}
       </h2>
 
