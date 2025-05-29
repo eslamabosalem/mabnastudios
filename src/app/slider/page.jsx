@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import Navbar from '../Component/Layout/Navbar';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -181,7 +182,8 @@ export default function Slider() {
   ];
 
   return (
-    <div  className="my-18">
+    <div id="services" className="my-18">
+        <Navbar/>
       <section className="py-8 px-4 md:px-8">
         <h1 className="text-4xl font-bold text-center mb-8 ">OUR SERVICES</h1>
 
