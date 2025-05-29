@@ -1,6 +1,15 @@
 "use client";
+
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+
+gsap.registerPlugin(ScrollTrigger);
+
 import team1 from "../../../images/1 (1).png";
 import team2 from "../../../images/1 (6).png";
 import team3 from "../../../images/1-1.png";
@@ -13,9 +22,6 @@ import team9 from "../../../images/10.png";
 import team10 from "../../../images/11.png";
 import team11 from "../../../images/44.png";
 import team12 from "../../../images/2222.png";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 const sliderData = [
   {
@@ -85,10 +91,6 @@ function ImageWithArrows({ images, title, description, interval }) {
 
   return (
     <div className="relative">
-      <h2 className="text-2xl  font-bold mb-4 my-4 text-center">
-        {title}
-      </h2>
-
       <div
         className="relative w-full md:my-10 mx-auto rounded-lg overflow-hidden cursor-pointer"
         style={{ height: 400 }}
@@ -124,7 +126,7 @@ function ImageWithArrows({ images, title, description, interval }) {
           aria-label="Next Image"
         >
           <FontAwesomeIcon
-              icon={faArrowLeft}
+            icon={faArrowLeft}
             className="text-2xl text-white/80"
           />
         </button>
@@ -139,8 +141,7 @@ function ImageWithArrows({ images, title, description, interval }) {
           aria-label="Previous Image"
         >
           <FontAwesomeIcon
-         
-             icon={faArrowRight}
+            icon={faArrowRight}
             className="text-2xl text-white/80"
           />
         </button>
@@ -150,16 +151,40 @@ function ImageWithArrows({ images, title, description, interval }) {
 }
 
 export default function Slider() {
+  const sectionsRef = useRef([]);
+
+  useEffect(() => {
+    sectionsRef.current.forEach((section) => {
+      gsap.fromTo(
+        section,
+        { autoAlpha: 0, y: 50 },
+        {
+          duration: 1,
+          autoAlpha: 1,
+          y: 0,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    });
+  }, []);
+
   return (
     <div className="md:my-20">
       <section className="py-12 px-4 md:px-8">
-        <h1 className="text-4xl font-bold text-center mb-8 ">
-          OUR SERVICES
-        </h1>
+        <h1 className="text-4xl font-bold text-center mb-8">OUR SERVICES</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto">
           {sliderData.map((section, idx) => (
-            <div key={idx} className="rounded-xl p-4 dark:text-white">
+            <div
+              key={idx}
+              className="rounded-xl p-4 dark:text-white"
+              ref={(el) => (sectionsRef.current[idx] = el)}
+            >
               <ImageWithArrows
                 images={section.images}
                 title={section.title}
