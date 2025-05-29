@@ -122,13 +122,13 @@ export default function TeamCarousel() {
       {/* Team member info */}
       <div className="text-center mb-17 mt-15">
         <h2
-          className="text-3xl font-bold transition-opacity duration-300"
+          className="text-3xl    font-bold transition-opacity duration-300"
           style={{ opacity: isAnimating ? 0 : 1 }}
         >
           {teamMembers[currentIndex].name}
         </h2>
         <p
-          className="text-xl  dark:text-white transition-opacity duration-300"
+          className="text-xl   transition-opacity duration-300"
           style={{ opacity: isAnimating ? 0 : 1 }}
         >
           {teamMembers[currentIndex].role}
