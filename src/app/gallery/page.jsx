@@ -70,7 +70,7 @@ export default function Gallery() {
   
     <Navbar />
     <div className="w-full mt-20 bg-gradient-to-br from-white via-[#fdf6e3] to-[#fff8e1] px-6 py-6 md:py-8 lg:py-12">
-      <h1 className="text-center text-4xl md:text-5xl font-bold text-[#bfa14b] mb-12 tracking-wide">
+      <h1 className="text-center text-2xl md:text-5xl font-bold text-[#bfa14b] mb-12 tracking-wide">
         Explore Our Premium Properties
       </h1>
 
@@ -111,7 +111,7 @@ export default function Gallery() {
                 src={img.src}
                 alt={img.alt}
                 fill
-                sizes="96px"
+                sizes="80px"
                 className="object-cover"
                 priority={selectedImage.id === img.id}
                 loading="eager"

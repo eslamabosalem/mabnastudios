@@ -4,7 +4,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import Navbar from '../Component/Layout/Navbar';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -45,7 +44,7 @@ const sliderData = [
   },
 ];
 
-function ImageWithArrows({ images, title, description, interval }) {
+function ImageWithArrows({ images, title, description, interval, link }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const touchStartX = useRef(null);
   const intervalRef = useRef(null);
@@ -93,7 +92,7 @@ function ImageWithArrows({ images, title, description, interval }) {
   return (
     <div className="relative">
       <div
-        className="relative w-full md:my-10 mx-auto rounded-lg overflow-hidden cursor-pointer"
+        className="relative w-full md:my-10 mx-auto rounded-lg overflow-hidden"
         style={{ height: 400 }}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
@@ -110,41 +109,38 @@ function ImageWithArrows({ images, title, description, interval }) {
           />
         ))}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
-          <div className="text-white space-y-2">
-            <h3 className="text-xl font-bold text-white">{title}</h3>
+        {/* الرابط على النص فقط */}
+        <a href={link} className="absolute inset-0">
+          <div className="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent text-white px-4 py-3 cursor-pointer">
+            <h3 className="text-xl font-bold">{title}</h3>
             <p className="text-sm line-clamp-3">{description}</p>
           </div>
-        </div>
+        </a>
 
-        {/* Left arrow on left side */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            nextImage();
-          }}
-          className="absolute top-1/2 left-2 transform -translate-y-1/2 p-2 rounded-full backdrop-blur-sm hover:bg-white/30 transition-all"
-          aria-label="Next Image"
-        >
-          <FontAwesomeIcon
-            icon={faArrowLeft}
-            className="text-2xl text-white/80"
-          />
-        </button>
-
-        {/* Right arrow on right side */}
+        {/* السهم الأيسر */}
         <button
           onClick={(e) => {
             e.stopPropagation();
             prevImage();
           }}
-          className="absolute top-1/2 right-2 transform -translate-y-1/2 p-2 rounded-full backdrop-blur-sm hover:bg-white/30 transition-all"
+          className="absolute top-1/2 left-2 transform -translate-y-1/2 p-2 rounded-full backdrop-blur-sm hover:bg-white/30 transition-all"
           aria-label="Previous Image"
+          tabIndex={0}
         >
-          <FontAwesomeIcon
-            icon={faArrowRight}
-            className="text-2xl text-white/80"
-          />
+          <FontAwesomeIcon icon={faArrowLeft} className="text-2xl text-white/80" />
+        </button>
+
+        {/* السهم الأيمن */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            nextImage();
+          }}
+          className="absolute top-1/2 right-2 transform -translate-y-1/2 p-2 rounded-full backdrop-blur-sm hover:bg-white/30 transition-all"
+          aria-label="Next Image"
+          tabIndex={0}
+        >
+          <FontAwesomeIcon icon={faArrowRight} className="text-2xl text-white/80" />
         </button>
       </div>
     </div>
@@ -174,24 +170,17 @@ export default function Slider() {
     });
   }, []);
 
-  // روابط الصفحات لكل سكشن، عدل الروابط حسب حاجتك
-  const links = [
-    "/gallery",
-    "/gallery",
-    "/gallery",
-  ];
+  const links = ["/gallery", "/gallery", "/gallery"];
 
   return (
-    <div id="services" className="my-18">
-        <Navbar/>
+    <div className="my-18">
       <section className="py-8 px-4 md:px-8">
-        <h1 className="text-4xl font-bold text-center mb-8 ">OUR SERVICES</h1>
+        <h1 className="text-4xl font-bold text-center mb-8">OUR SERVICES</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto">
           {sliderData.map((section, idx) => (
-            <a
+            <div
               key={idx}
-              href={links[idx]}
               className="rounded-xl p-4 dark:text-white block"
               ref={(el) => (sectionsRef.current[idx] = el)}
             >
@@ -200,8 +189,9 @@ export default function Slider() {
                 title={section.title}
                 description={section.description}
                 interval={section.interval}
+                link={links[idx]}
               />
-            </a>
+            </div>
           ))}
         </div>
       </section>
