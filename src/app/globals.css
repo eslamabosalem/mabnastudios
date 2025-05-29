@@ -1,21 +1,10 @@
 @import "tailwindcss";
 /* app/globals.css */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+
   font-family: var(--font-geist-sans), Arial, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -26,10 +15,7 @@ body {
 
 
 /* Navbar Specific Styles */
-.navbar {
-  background-color: var(--background);
-  color: var(--foreground);
-}
+
 
 .navbar-link {
   @apply px-4 py-3 transition-colors duration-200;
