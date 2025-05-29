@@ -15,16 +15,18 @@ export default function Navbar({ toggleLanguage }) {
   const dropdownRef = useRef(null);
 
   // 1. Handle dark mode
-  useEffect(() => {
-    const savedMode = localStorage.getItem('darkMode');
-    if (savedMode) {
-      setDarkMode(savedMode === 'true');
-      document.documentElement.classList.toggle('dark', savedMode === 'true');
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setDarkMode(true);
-      document.documentElement.classList.add('dark');
-    }
-  }, []);
+useEffect(() => {
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+    setDarkMode(true);
+    document.documentElement.classList.add('dark');
+  } else {
+    setDarkMode(false);
+    document.documentElement.classList.remove('dark');
+  }
+}, []);
 
   const toggleDarkMode = () => {
     const newMode = !darkMode;

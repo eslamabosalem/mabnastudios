@@ -1,11 +1,12 @@
 @import "tailwindcss";
-/* app/globals.css */
 
+/* 🌞 الوضع الافتراضي */
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
+/* 🌓 الوضع الداكن التلقائي بناءً على النظام */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -13,6 +14,14 @@
   }
 }
 
+/* 🌑 الوضع الداكن عند تفعيل class .dark يدويًا */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  color-scheme: dark;
+}
+
+/* ✨ تنسيق الصفحة */
 body {
   background: var(--background);
   color: var(--foreground);
@@ -20,20 +29,7 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.dark {
-  color-scheme: dark;
-}
-
-html.dark body {
-  background-color: #242424;
-  color: white;
-}
-
-html.dark {
-  color-scheme: dark;
-}
-
-/* Navbar Specific Styles */
+/* ✳️ استايلات إضافية */
 .navbar {
   background-color: var(--background);
   color: var(--foreground);
@@ -50,9 +46,6 @@ html.dark {
 .mobile-menu {
   @apply bg-white dark:bg-[#242424] shadow-lg;
 }
-
-
-/* Add these classes to your global CSS */
 
 .TeamCarouselcenter {
   left: 50%;
@@ -86,22 +79,11 @@ html.dark {
   opacity: 0.7;
 }
 
-.dark {
-  color-scheme: dark;
-}
-body{
- background-color: #FFFFFF;
-  }
-
-
-.dark body {
-  background-color: #242424;
-  color: white;
-}
 .TeamCarouselhidden {
   opacity: 0;
   pointer-events: none;
-} 
+}
+
 .dot {
   position: fixed;
   width: 8px;
