@@ -14,6 +14,9 @@ import team10 from "../../../images/11.png";
 import team11 from "../../../images/44.png";
 import team12 from "../../../images/2222.png";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+
 const sliderData = [
   {
     title: "Estate for Sale and Purchase",
@@ -37,33 +40,24 @@ const sliderData = [
 
 function ImageWithArrows({ images, title, description, interval }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showOverlay, setShowOverlay] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const touchStartX = useRef(null);
   const intervalRef = useRef(null);
-
-  useEffect(() => {
-    setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
-  }, []);
 
   const startInterval = useCallback(() => {
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
       setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-      setShowOverlay(false);
     }, interval);
   }, [images.length, interval]);
 
   const prevImage = useCallback(() => {
     startInterval();
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-    setShowOverlay(false);
   }, [images.length, startInterval]);
 
   const nextImage = useCallback(() => {
     startInterval();
     setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-    setShowOverlay(false);
   }, [images.length, startInterval]);
 
   const handleTouchStart = (e) => {
@@ -90,18 +84,14 @@ function ImageWithArrows({ images, title, description, interval }) {
   }, [startInterval]);
 
   return (
-    <div className="relative group">
-      {/* Section Title */}
-      <h2 className="text-2xl text-black dark:text-white font-bold mb-4 my-4 text-center">
+    <div className="relative">
+      <h2 className="text-2xl  font-bold mb-4 my-4 text-center">
         {title}
       </h2>
 
       <div
         className="relative w-full md:my-10 mx-auto rounded-lg overflow-hidden cursor-pointer"
         style={{ height: 400 }}
-        onMouseEnter={() => !isMobile && setShowOverlay(true)}
-        onMouseLeave={() => !isMobile && setShowOverlay(false)}
-        onClick={() => isMobile && setShowOverlay((prev) => !prev)}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
@@ -117,37 +107,42 @@ function ImageWithArrows({ images, title, description, interval }) {
           />
         ))}
 
-        {/* Overlay with gradient */}
-        <div
-          className={`absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4 transition-all duration-300 ${
-            showOverlay ? "opacity-100" : "opacity-0"
-          }`}
-        >
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
           <div className="text-white space-y-2">
             <h3 className="text-xl font-bold text-white">{title}</h3>
             <p className="text-sm line-clamp-3">{description}</p>
           </div>
         </div>
 
-        {/* Navigation buttons */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            prevImage();
-          }}
-          className="absolute top-1/2 left-2 transform -translate-y-1/2 p-2 rounded-full backdrop-blur-sm hover:bg-white/50 transition-all"
-        >
-          <span className="text-2xl">‹</span>
-        </button>
-
+        {/* السهم الأيمن على الشمال - لون أبيض شفاف */}
         <button
           onClick={(e) => {
             e.stopPropagation();
             nextImage();
           }}
-          className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white/30 p-2 rounded-full backdrop-blur-sm hover:bg-white/50 transition-all"
+          className="absolute top-1/2 left-2 transform -translate-y-1/2 p-2 rounded-full backdrop-blur-sm hover:bg-white/30 transition-all"
+          aria-label="Next Image"
         >
-          <span className="text-2xl">›</span>
+          <FontAwesomeIcon
+              icon={faArrowLeft}
+            className="text-2xl text-white/80"
+          />
+        </button>
+
+        {/* السهم الأيسر على اليمين - لون أبيض شفاف */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            prevImage();
+          }}
+          className="absolute top-1/2 right-2 transform -translate-y-1/2 p-2 rounded-full backdrop-blur-sm hover:bg-white/30 transition-all"
+          aria-label="Previous Image"
+        >
+          <FontAwesomeIcon
+         
+             icon={faArrowRight}
+            className="text-2xl text-white/80"
+          />
         </button>
       </div>
     </div>
@@ -158,7 +153,7 @@ export default function Slider() {
   return (
     <div className="md:my-20">
       <section className="py-12 px-4 md:px-8">
-        <h1 className="text-4xl font-bold text-center mb-8 text-black dark:text-white">
+        <h1 className="text-4xl font-bold text-center mb-8 ">
           OUR SERVICES
         </h1>
 
