@@ -83,7 +83,7 @@ export default function ContactUs() {
                 <input
                   type="text"
                   id="name"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:text-[#b3942d] focus:border-[#b3942d] dark:bg-gray-700 "
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:text-[#b3942d] focus:border-[#b3942d]  "
                   placeholder="John Doe"
                 />
               </div>
@@ -98,7 +98,7 @@ export default function ContactUs() {
                 <input
                   type="email"
                   id="email"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:text-[#b3942d] focus:text-[#b3942d] dark:bg-gray-700 "
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:text-[#b3942d] focus:text-[#b3942d]  "
                   placeholder="john@example.com"
                 />
               </div>
@@ -112,7 +112,7 @@ export default function ContactUs() {
                 <textarea
                   id="message"
                   rows="5"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:text-[#b3942d] focus:border:text-[#b3942d] dark:bg-gray-700 "
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:text-[#b3942d] focus:border:text-[#b3942d]  "
                   placeholder="Tell us about your project..."
                 ></textarea>
               </div>
