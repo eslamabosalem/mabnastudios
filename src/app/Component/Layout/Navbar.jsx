@@ -89,9 +89,9 @@ export default function Navbar({ toggleLanguage }) {
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex flex-1 justify-center items-center gap-6">
-          <NavLink href="/services" text={t('services')} darkMode={darkMode} />
-          <NavLink href="/blog" text={t('blog')} darkMode={darkMode} />
-          <NavLink href="/work" text={t('our_work')} darkMode={darkMode} />
+          <NavLink  href="/slider"  text={t('services')} darkMode={darkMode} />
+         
+          <NavLink href="/gallery" text={t('our_work')} darkMode={darkMode} />
         </div>
 
         {/* Language Toggle */}
@@ -145,17 +145,12 @@ export default function Navbar({ toggleLanguage }) {
           }`}
         >
           <NavLink 
-            href="/services" 
+            href="/slider" 
             text={t('services')} 
             mobile 
             darkMode={darkMode}
           />
-          <NavLink 
-            href="/blog" 
-            text={t('blog')} 
-            mobile 
-            darkMode={darkMode}
-          />
+    
           <NavLink 
             href="/work" 
             text={t('our_work')} 
@@ -174,7 +169,7 @@ export default function Navbar({ toggleLanguage }) {
                   color="primary"
                 />
               }
-              label={darkMode ? t('dark_mode') : t('light_mode')}
+              label={darkMode ? t('dark mode') : t('light mode')}
               className="ml-2"
             />
           </div>

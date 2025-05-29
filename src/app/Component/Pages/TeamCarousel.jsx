@@ -75,7 +75,7 @@ export default function TeamCarousel() {
   }, []); // Empty deps, so event added only once
 
   return (
-    <div className="relative w-full max-w-5xl mt-18 mb-18 mx-auto h-[500px] overflow-hidden">
+    <div className="relative w-full max-w-5xl my-14 mx-auto h-[500px] overflow-hidden">
       <h1
         className="text-4xl md:text-5xl font-bold text-center mb-16  dark:text-white"
       >

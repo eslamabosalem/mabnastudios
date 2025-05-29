@@ -12,7 +12,20 @@ body {
 .dark {
   color-scheme: dark;
 }
+html {
+  scroll-behavior: smooth;
+}
+#services {
+  position: relative;
+}
 
+#services::before {
+  content: "";
+  display: block;
+  height: 60px; /* ارتفاع الهيدر */
+  margin-top: -60px; /* نفس ارتفاع الهيدر */
+  visibility: hidden;
+}
 
 /* Navbar Specific Styles */
 

@@ -107,25 +107,26 @@ export default function ScrollVideo() {
         autoPlay
         muted
         loop
-        className="w-full h-[500px]   object-cover rounded-5xl"
+        className="w-full h-[400px]    object-cover  rounded-5xl"
       />
 
       {/* زر التشغيل والإيقاف بتأثير morph و confetti */}
-      <button
-        ref={buttonRef}
-        onClick={toggleVideo}
-        className="absolute bottom-6 right-6 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-80 transition"
-        aria-label={isPlaying ? "إيقاف الفيديو" : "تشغيل الفيديو"}
-      >
-        <svg viewBox="0 0 24 24" width={24} height={24} fill="none" stroke="currentColor" strokeWidth="2">
-          <path
-            ref={pathRef}
-            d={pausePath}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
+   <button
+  ref={buttonRef}
+  onClick={toggleVideo}
+  className="absolute bottom-20 right-5 mb-2 mr-2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-80 transition z-20"
+  aria-label={isPlaying ? "إيقاف الفيديو" : "تشغيل الفيديو"}
+>
+  <svg viewBox="0 0 24 24" width={24} height={24} fill="none" stroke="currentColor" strokeWidth="2">
+    <path
+      ref={pathRef}
+      d={pausePath}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+</button>
+
     </div>
   );
 }

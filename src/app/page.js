@@ -6,6 +6,8 @@ import ScrollVideo from "./Component/Pages/ScrollVideo";
 import Slider from "./Component/Slider";
 import ContactUs from "./Component/Pages/CountactUs";
 
+
+
 export default function Home() {
   return (
     <>
@@ -17,6 +19,7 @@ export default function Home() {
 <ScrollVideo/>
 <TeamCarousel/>
 <ContactUs/>
+
 
 </div>
 
