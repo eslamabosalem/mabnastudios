@@ -100,33 +100,52 @@ export default function ScrollVideo() {
   };
 
   return (
-    <div className="relative h-[60vh] overflow-hidden group">
+    <div className="relative h-[60vh] overflow-hidden group max-w-full rounded-2xl">
       <video
         ref={videoRef}
         src="/video/Architectural 1.mp4"
         autoPlay
         muted
         loop
-        className="w-full h-[420px]    object-cover  rounded-5xl"
+        className="w-full h-[500px] object-cover rounded-2xl"
       />
 
-      {/* زر التشغيل والإيقاف بتأثير morph و confetti */}
-   <button
-  ref={buttonRef}
-  onClick={toggleVideo}
-  className="absolute bottom-20 right-5 mb-2 mr-2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-80 transition z-20"
-  aria-label={isPlaying ? "إيقاف الفيديو" : "تشغيل الفيديو"}
->
-  <svg viewBox="0 0 24 24" width={24} height={24} fill="none" stroke="currentColor" strokeWidth="2">
-    <path
-      ref={pathRef}
-      d={pausePath}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-</button>
-
+      {/* زر التشغيل والإيقاف في الأسفل يمين */}
+      <button
+        ref={buttonRef}
+        onClick={toggleVideo}
+        aria-label={isPlaying ? "إيقاف الفيديو" : "تشغيل الفيديو"}
+        className="
+          absolute bottom-4 right-4 
+          bg-black bg-opacity-50 text-white 
+          p-3 rounded-full 
+          hover:bg-opacity-80 
+          transition 
+          z-20
+          sm:right-3 sm:bottom-3 sm:p-2 sm:w-10 sm:h-10
+          md:right-5 md:bottom-5 md:p-3 md:w-12 md:h-12
+          lg:right-8 lg:bottom-8 lg:p-4 lg:w-14 lg:h-14
+          flex items-center justify-center
+          shadow-lg
+        "
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width={24}
+          height={24}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className="w-6 h-6 sm:w-5 sm:h-5 md:w-6 md:h-6"
+        >
+          <path
+            ref={pathRef}
+            d={pausePath}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
     </div>
   );
 }
