@@ -19,7 +19,7 @@ const sliderData = [
     title: "Estate for Sale and Purchase",
     description: "Find amazing properties to buy or sell easily.",
     images: [team1, team2, team3, team4],
-    interval: 3000,
+    interval: 4000,
   },
   {
     title: "Find Your Dream Home with Us",
@@ -28,10 +28,10 @@ const sliderData = [
     interval: 4000,
   },
   {
-    title: "Exclusive Properties at Best ",
+    title: "Exclusive Properties at Best",
     description: "Get access to premium properties at competitive prices.",
     images: [team9, team10, team11, team12],
-    interval: 5000,
+    interval: 4000,
   },
 ];
 
@@ -42,41 +42,37 @@ function ImageWithArrows({ images, title, description, interval }) {
   const touchStartX = useRef(null);
   const intervalRef = useRef(null);
 
-  // الكشف عن الأجهزة المحمولة
   useEffect(() => {
     setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
   }, []);
 
-  // إدارة الفاصل الزمني
   const startInterval = useCallback(() => {
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
-      setCurrentIndex(prev => (prev === images.length - 1 ? 0 : prev + 1));
+      setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
       setShowOverlay(false);
     }, interval);
   }, [images.length, interval]);
 
-  // التحكم في السلايدر
   const prevImage = useCallback(() => {
     startInterval();
-    setCurrentIndex(prev => (prev === 0 ? images.length - 1 : prev - 1));
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
     setShowOverlay(false);
   }, [images.length, startInterval]);
 
   const nextImage = useCallback(() => {
     startInterval();
-    setCurrentIndex(prev => (prev === images.length - 1 ? 0 : prev + 1));
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
     setShowOverlay(false);
   }, [images.length, startInterval]);
 
-  // إدارة اللمس
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
   };
 
   const handleTouchEnd = (e) => {
     if (!touchStartX.current) return;
-    
+
     const touchEndX = e.changedTouches[0].clientX;
     const diff = touchStartX.current - touchEndX;
 
@@ -84,7 +80,7 @@ function ImageWithArrows({ images, title, description, interval }) {
       if (diff > 0) nextImage();
       else prevImage();
     }
-    
+
     touchStartX.current = null;
   };
 
@@ -95,17 +91,17 @@ function ImageWithArrows({ images, title, description, interval }) {
 
   return (
     <div className="relative group">
-      {/* عنوان القسم */}
-      <h2 className="text-2xl  text-black dark:text-white  font-bold mb-4 my-4 text-center">
+      {/* Section Title */}
+      <h2 className="text-2xl text-black dark:text-white font-bold mb-4 my-4 text-center">
         {title}
       </h2>
 
       <div
-        className="relative w-full  md:my-10 mx-auto rounded-lg overflow-hidden cursor-pointer"
+        className="relative w-full md:my-10 mx-auto rounded-lg overflow-hidden cursor-pointer"
         style={{ height: 400 }}
         onMouseEnter={() => !isMobile && setShowOverlay(true)}
         onMouseLeave={() => !isMobile && setShowOverlay(false)}
-        onClick={() => isMobile && setShowOverlay(prev => !prev)}
+        onClick={() => isMobile && setShowOverlay((prev) => !prev)}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
@@ -121,19 +117,19 @@ function ImageWithArrows({ images, title, description, interval }) {
           />
         ))}
 
-        {/* Overlay مع تأثيرات متقدمة */}
+        {/* Overlay with gradient */}
         <div
           className={`absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4 transition-all duration-300 ${
             showOverlay ? "opacity-100" : "opacity-0"
           }`}
         >
           <div className="text-white space-y-2">
-            <h3 className="text-xl font-bold">{title}</h3>
+            <h3 className="text-xl font-bold text-white">{title}</h3>
             <p className="text-sm line-clamp-3">{description}</p>
           </div>
         </div>
 
-        {/* الأزرار مع تحسينات لللمس */}
+        {/* Navigation buttons */}
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -160,26 +156,25 @@ function ImageWithArrows({ images, title, description, interval }) {
 
 export default function Slider() {
   return (
-    <> <div className=" md:my-20">
-    <section className="py-12 px-4 md:px-8 ">
-      <h1 className="text-4xl font-bold text-center mb-8  dark:text-white">
-        OUR SERVIES
-      </h1>
-      {/*  */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8  mx-auto">
-        {sliderData.map((section, idx) => (
-          <div key={idx} className="  rounded-xl  p-4 dark:text-white ">
-            <ImageWithArrows
-              images={section.images}
-              title={section.title}
-              description={section.description}
-              interval={section.interval}
-            />
-          </div>
-        ))}
-      </div>
-    </section>
+    <div className="md:my-20">
+      <section className="py-12 px-4 md:px-8">
+        <h1 className="text-4xl font-bold text-center mb-8 text-black dark:text-white">
+          OUR SERVICES
+        </h1>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto">
+          {sliderData.map((section, idx) => (
+            <div key={idx} className="rounded-xl p-4 dark:text-white">
+              <ImageWithArrows
+                images={section.images}
+                title={section.title}
+                description={section.description}
+                interval={section.interval}
+              />
+            </div>
+          ))}
         </div>
-    </>
+      </section>
+    </div>
   );
 }
