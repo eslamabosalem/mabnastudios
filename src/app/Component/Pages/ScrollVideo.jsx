@@ -107,7 +107,7 @@ export default function ScrollVideo() {
         autoPlay
         muted
         loop
-        className="w-full h-[400px]    object-cover  rounded-5xl"
+        className="w-full h-[500px]    object-cover  rounded-5xl"
       />
 
       {/* زر التشغيل والإيقاف بتأثير morph و confetti */}
